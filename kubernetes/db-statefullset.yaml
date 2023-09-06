@@ -16,6 +16,8 @@ spec:
       containers:
       - name: db-StatefulSet
         image: postgres:14.2-alpine
+        ports:
+        - containerPort: 5432
         env:
           - name: POSTGRES_PASSWORD
             valueFrom:
@@ -24,11 +26,8 @@ spec:
                 name: ruby-secret-db
         volumeMounts:
           - name: data-volume
-            mountPath: "/var/lib/postgressql/data"
+            mountPath: "/var/lib/postgresql/data"
       volumes:
         - name:  data-volume
           persistentVolumeClaim:
-            claimName: db-pvc
-      ports:
-        - containerPort: 5432
-          name: db-container-port   
+            claimName: db-pvc  

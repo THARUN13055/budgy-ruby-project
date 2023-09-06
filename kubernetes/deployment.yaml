@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ruby-Deployment
+  name: ruby-deployment
   namespace: ruby
 spec:
   selector:
     matchLabels:
-      app: ruby-Deployment
+      app: ruby-deployment
   template:
     metadata:
       labels:
-        app: ruby-Deployment
+        app: ruby-deployment
     spec:
       containers:
       - name: ruby-budgy

@@ -4,8 +4,10 @@ metadata:
   name: db-service
   namespace: database
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: db-StatefulSet
+  clusterIP: None
   ports:
-  - port: 5432
+    - port: 3306
+
