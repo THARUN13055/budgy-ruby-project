@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: db-statefulSet
+      app: db-statefulset
   serviceName: db-service
   replicas: 3
   template:
@@ -20,6 +20,18 @@ spec:
         ports:
         - containerPort: 5432
         env:
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                key: POSTGRES_USER
+                name: db-config
+
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                key: POSTGRES_DB
+                name: db-config
+
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:

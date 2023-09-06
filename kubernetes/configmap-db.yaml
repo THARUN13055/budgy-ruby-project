@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-config
+  namespace: database
+data:
+  POSTGRES_USER: budgy
+  POSTGRES_DB: Budgy_production

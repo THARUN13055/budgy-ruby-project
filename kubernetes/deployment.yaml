@@ -21,11 +21,13 @@ spec:
               configMapKeyRef:
                 key: POSTGRES_USER
                 name: ruby-db-config
-          - name: POSTGRES_NAME
+
+          - name: POSTGRES_DB
             valueFrom:
               configMapKeyRef:
-                key: POSTGRES_NAME
+                key: POSTGRES_DB
                 name: ruby-db-config
+
           - name: Budgy_DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -35,7 +37,7 @@ spec:
         resources:
           limits:
             memory: "1024Mi"
-            cpu: "100m"
+            cpu: "1000m"
           requests:
             memory: "512Mi"
             cpu: "500m"
