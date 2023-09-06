@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ruby-Deployment
+  namespace: ruby
+spec:
+  selector:
+    matchLabels:
+      app: ruby-Deployment
+  template:
+    metadata:
+      labels:
+        app: ruby-Deployment
+    spec:
+      containers:
+      - name: ruby-budgy
+        image: tharun13055/budgy:latest
+        env:
+          - name: POSTGRES_USER
+            valueFrom:
+              configMapKeyRef:
+                key: POSTGRES_USER
+                name: ruby-db-config
+          - name: POSTGRES_NAME
+            valueFrom:
+              configMapKeyRef:
+                key: POSTGRES_NAME
+                name: ruby-db-config
+          - name: Budgy_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: Budgy_DATABASE_PASSWORD
+                name: ruby-secret
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 3000
+        livenessProbe:
+          httpGet:
+            path: /index.html
+            port: 3000
+            httpHeaders:
+            - name: ruby-budgy
+              value: Awesome
+          initialDelaySeconds: 3
+          periodSeconds: 3

@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ruby-budgy
+  namespace: database
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`budgy.log.com`)
+      kind: Rule
+      service: 
+        - name: ruby-Deployment
+          port: 80

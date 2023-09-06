@@ -1,0 +1,26 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: argocd-role
+  namespace: argocd-spec
+rules:
+  - apiGroups: [""]
+    resources: ["Namespace"]
+    resourceNames: ["argocd"]
+    verbs: ["get","list","watch"]
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: argocd-rbac
+  namespace: argocd-spec
+subjects:
+  - kind: ServiceAccount
+    name: argocd-spec
+    namespace: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io/v1
+  kind: Role
+  name: argocd-role
+  
