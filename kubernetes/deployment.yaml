@@ -31,21 +31,13 @@ spec:
               secretKeyRef:
                 key: Budgy_DATABASE_PASSWORD
                 name: ruby-secret
+        command: [ "sh", "-c", "bin/rails db:create db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'" ]
         resources:
           limits:
-            memory: "256Mi"
-            cpu: "500m"
+            memory: "1024Mi"
+            cpu: "100m"
           requests:
-            memory: "128Mi"
-            cpu: "250m"
+            memory: "512Mi"
+            cpu: "500m"
         ports:
         - containerPort: 3000
-        livenessProbe:
-          httpGet:
-            path: /index.html
-            port: 3000
-            httpHeaders:
-            - name: ruby-budgy
-              value: Awesome
-          initialDelaySeconds: 3
-          periodSeconds: 3

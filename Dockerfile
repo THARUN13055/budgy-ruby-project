@@ -20,14 +20,12 @@ RUN bundle install
 # Copy the rest of the application code into the container
 COPY . .
 
-RUN bundle exec rails db:create db:migrate
-
 # Expose the port your Rails application will run on
 
 RUN apk add --no-cache postgresql-client 
 
-RUN bundle exec rails db:create db:migrate RAILS_ENV=development
-
 # Start your Rails application
+
 EXPOSE 3000
+
 CMD ["rails", "server", "-b", "0.0.0.0"]
