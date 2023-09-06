@@ -1,20 +1,21 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mystatefulset
+  name:  db-statefulset
+  namespace: database
 spec:
   selector:
     matchLabels:
-      app: db-StatefulSet
+      app: db-statefulSet
   serviceName: db-service
   replicas: 3
   template:
     metadata:
       labels:
-        app: db-StatefulSet
+        app: db-statefulSet
     spec:
       containers:
-      - name: db-StatefulSet
+      - name: db-statefulSet
         image: postgres:14.2-alpine
         ports:
         - containerPort: 5432
@@ -30,4 +31,4 @@ spec:
       volumes:
         - name:  data-volume
           persistentVolumeClaim:
-            claimName: db-pvc  
+            claimName: db-pvc
