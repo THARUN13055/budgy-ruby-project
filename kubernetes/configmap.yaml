@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: ruby-db-config
-  namespace: ruby
-data:
-  POSTGRES_USER: budgy
-  POSTGRES_DB: Budgy_production

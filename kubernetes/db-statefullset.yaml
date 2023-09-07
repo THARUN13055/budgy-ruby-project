@@ -37,6 +37,8 @@ spec:
               secretKeyRef:
                 key: POSTGRES_PASSWORD
                 name: ruby-secret-db
+          - name: PGDATA
+            value: "/var/lib/postgresql/data/pgdata"
         volumeMounts:
           - name: data-volume
             mountPath: "/var/lib/postgresql/data"

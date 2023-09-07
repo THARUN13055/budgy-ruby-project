@@ -84,3 +84,10 @@ production:
   database: Budgy_production
   username: Budgy
   password: <%= ENV["Budgy_DATABASE_PASSWORD"] %>
+
+
+# production:
+#   <<: *default
+#   database: <%= ENV["DATABASE_DB"] %>
+#   username: <%= ENV["DATABASE_USER"] %>
+#   password: <%= ENV["DATABASE_PASSWORD"] %>

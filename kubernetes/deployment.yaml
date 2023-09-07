@@ -16,22 +16,12 @@ spec:
       - name: ruby-budgy
         image: tharun13055/budgy:latest
         env:
-          - name: POSTGRES_USER
-            valueFrom:
-              configMapKeyRef:
-                key: POSTGRES_USER
-                name: ruby-db-config
-
-          - name: POSTGRES_DB
-            valueFrom:
-              configMapKeyRef:
-                key: POSTGRES_DB
-                name: ruby-db-config
-
-          - name: Budgy_DATABASE_PASSWORD
+          - name: RAILS_ENV
+            value: production
+          - name: DATABASE_URL
             valueFrom:
               secretKeyRef:
-                key: Budgy_DATABASE_PASSWORD
+                key: DATABASE_URL
                 name: ruby-secret
         command: [ "sh", "-c", "bin/rails db:create db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'" ]
         resources:
