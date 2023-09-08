@@ -1,9 +1,54 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: ruby-deployment
+#   namespace: ruby
+# spec:
+#   replicas: 3
+#   selector:
+#     matchLabels:
+#       app: ruby-deployment
+#   template:
+#     metadata:
+#       labels:
+#         app: ruby-deployment
+#     spec:
+#       containers:
+#       - name: ruby-budgy
+#         image: tharun13055/budgy:latest
+#         ports:
+#         - containerPort: 3000
+#         env: 
+#           - name: DATABASE_URL
+#             value: postgresql
+#           - name: DATABASE_HOST
+#             value: ruby-service
+#           - name: database
+#             value: Budgy_production
+#           - name: username
+#             value: Budgy
+#           - name: Budgy_DATABASE_PASSWORD
+#             value: password
+#           - name: RAILS_ENV
+#             value: production
+#           - name: SECRET_KEY_BASE
+#             value: UkKuGgSd5mr6Fkc9OMiDA+BVvH1Hyl0LyFp15xDfbpJ0J+9i8N5714p/DU/u6uVA0KbZ5pyqyByYn3QLFRS+I9L3YGctvMMOSgF3uPnxa1x67uIhYHja99effFXDm/PqsvvlmtBbIOfzpglepefZtWffOPOAtXBhXFO3RTA2/rS60ZIU6fWCl2tUNwb/X6LbSA86R1H214rRd8xPb87Dm7IsdVre6+QD9SRa8YB9w6cdMcbTGs3hmw8h3/q/hXZd4Y5p43hJ5u3sGa1gSFF4TKuLGMFgQ1wgZiv7dTc2n3YQtbOeqPUoVxGgDnwlaclv9u0knBuYer+j0NixTLxmMkUSfsXAX184vIYr9cTe/oITIAL/f5yhVVpwqWjgm9QTP3orbCriSXSJ2i0issngOGPUzqysMu4YJY5o--6dkopLxTwTxcPVxA--Ohniv+we6M9EnlUQ/tPAYg==
+#         command: [ "sh", "-c", "bin/rails db:create db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'" ]
+#         resources:
+#           limits:
+#             memory: "1024Mi"
+#             cpu: "1000m"
+#           requests:
+#             memory: "512Mi"
+#             cpu: "500m"
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ruby-deployment
   namespace: ruby
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: ruby-deployment
@@ -15,15 +60,17 @@ spec:
       containers:
       - name: ruby-budgy
         image: tharun13055/budgy:latest
+        ports:
+        - containerPort: 3000
         env:
-          - name: RAILS_ENV
-            value: production
-          - name: DATABASE_URL
-            valueFrom:
-              secretKeyRef:
-                key: DATABASE_URL
-                name: ruby-secret
-        command: [ "sh", "-c", "bin/rails db:create db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'" ]
+        - name: DATABASE_URL
+          value: postgres://Budgy:password@ruby-service:5432/Budgy_production
+        - name: RAILS_ENV
+          value: production
+        - name: SECRET_KEY_BASE
+          value: UkKuGgSd5mr6Fkc9OMiDA+BVvH1Hyl0LyFp15xDfbpJ0J+9i8N5714p/DU/u6uVA0KbZ5pyqyByYn3QLFRS+I9L3YGctvMMOSgF3uPnxa1x67uIhYHja99effFXDm/PqsvvlmtBbIOfzpglepefZtWffOPOAtXBhXFO3RTA2/rS60ZIU6fWCl2tUNwb/X6LbSA86R1H214rRd8xPb87Dm7IsdVre6+QD9SRa8YB9w6cdMcbTGs3hmw8h3/q/hXZd4Y5p43hJ5u3sGa1gSFF4TKuLGMFgQ1wgZiv7dTc2n3YQtbOeqPUoVxGgDnwlaclv9u0knBuYer+j0NixTLxmMkUSfsXAX184vIYr9cTe/oITIAL/f5yhVVpwqWjgm9QTP3orbCriSXSJ2i0issngOGPUzqysMu4YJY5o--6dkopLxTwTxcPVxA--Ohniv+we6M9EnlUQ/tPAYg==
+        command: ["bin/rails", "server", "-b", "0.0.0.0"]
+        #command: [ "sh", "-c", "bin/rails db:create db:migrate && bundle exec rails s -p 3000 -b '0.0.0.0'" ]
         resources:
           limits:
             memory: "1024Mi"
@@ -31,5 +78,3 @@ spec:
           requests:
             memory: "512Mi"
             cpu: "500m"
-        ports:
-        - containerPort: 3000

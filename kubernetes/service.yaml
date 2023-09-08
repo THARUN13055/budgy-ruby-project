@@ -5,9 +5,9 @@ metadata:
   namespace: ruby
 spec:
   selector:
-    app: ruby-Deployment
+    app: ruby-deployment
   ports:
-  - port: 80
+  - port: 3000
     protocol: TCP
     targetPort: 3000
   type: LoadBalancer

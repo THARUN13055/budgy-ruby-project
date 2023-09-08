@@ -7,7 +7,7 @@ spec:
   type: ClusterIP
   selector:
     app: db-StatefulSet
-  clusterIP: None
+  # clusterIP: None
   ports:
     - port: 5432
 
