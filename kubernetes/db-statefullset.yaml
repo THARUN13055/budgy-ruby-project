@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: db-ruby
-  namespace: database
+  namespace: ruby
 spec:
   selector:
     matchLabels:
@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
       - name: db-statefulset
-        image: postgres:14.2-alpine
+        image: postgres:latest
         ports:
         - containerPort: 5432
-        command: ["sleep"]
-        args:
-          - "infinity"
+        # command: ["sleep"]
+        # args:
+        #   - "infinity"
         env: 
           - name: POSTGRES_USER
             value: Budgy
@@ -29,9 +29,12 @@ spec:
             value: password
           - name: POSTGRES_DB
             value: Budgy_production
+          - name: PGDATA
+            value: /var/lib/postgresql/data
         volumeMounts:
           - name: data-volume
             mountPath: "/var/lib/postgresql/data" 
+            subPath: postgres
       volumes:
         - name:  data-volume
           persistentVolumeClaim:
